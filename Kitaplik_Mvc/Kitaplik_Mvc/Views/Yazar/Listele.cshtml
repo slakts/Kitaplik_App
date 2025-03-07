@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Yazar>
+@using Kitaplik_Mvc.Models.Entities
+
 
 @{
     ViewData["Title"] = "Yazarlar";
@@ -19,6 +21,7 @@
                 <th>Soyad</th>
                 <th>Doğum Tarihi</th>
                 <th>Biyografi</th>
+                <th>Kitaplar</th>
                 <th>Güncelle</th>
                 <th>Sil</th>
             </tr>
@@ -31,6 +34,21 @@
                     <td>@yazar.Soyad</td>
                     <td>@yazar.DogumTarihi.ToShortDateString()</td>
                     <td>@yazar.Biyografi</td>
+                    <td>
+                        @if (yazar.Kitaplar != null && yazar.Kitaplar.Any())
+                        {
+                            <ul>
+                                @foreach (var kitap in yazar.Kitaplar)
+                                {
+                                    <li>@kitap.Baslik</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>Kitap Bulunamadı.</span>
+                        }
+                    </td>
                     <td><a href="@Url.Action("Guncelle", "Yazar", new { id = yazar.Id })" class="btn btn-primary">Güncelle</a></td>
                     <td><a href="@Url.Action("Sil", "Yazar", new { id = yazar.Id })" class="btn btn-danger">Sil</a></td>
                 </tr>

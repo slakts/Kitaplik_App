@@ -11,7 +11,7 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Listele()
         {
-            List<Yazar> yazarList = context.Yazarlar
+            var yazarList = context.Yazarlar
                 .Include(y => y.Kitaplar)
                 .ToList();
 
@@ -19,27 +19,10 @@ namespace Kitaplik_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult Ekle()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Ekle(Yazar yazar)
-        {
-            if (ModelState.IsValid)
-            {
-                context.Yazarlar.Add(yazar);
-                context.SaveChanges();
-                return RedirectToAction("Listele");
-            }
-            return View(yazar);
-        }
-        [HttpGet]
         public IActionResult Guncelle(int id)
         {
             var yazar = context.Yazarlar
-                .Include(k => k.Kitaplar) 
+                .Include(k => k.Kitaplar)
                 .FirstOrDefault(k => k.Id == id);
             if (yazar == null)
             {
@@ -61,11 +44,14 @@ namespace Kitaplik_Mvc.Controllers
 
                 existingYazar.Ad = yazar.Ad;
                 existingYazar.Soyad = yazar.Soyad;
+                existingYazar.DogumTarihi = yazar.DogumTarihi; // Eksik alan eklendi
+                existingYazar.Biyografi = yazar.Biyografi;     // Eksik alan eklendi
                 context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(yazar);
         }
+
         public IActionResult Sil(int id)
         {
             var yazar = context.Yazarlar.FirstOrDefault(k => k.Id == id);
@@ -74,7 +60,7 @@ namespace Kitaplik_Mvc.Controllers
                 return NotFound();
             }
             context.Yazarlar.Remove(yazar);
-                context.SaveChanges();
+            context.SaveChanges();
             return RedirectToAction("Listele");
         }
     }
