@@ -22,15 +22,15 @@
             <label for="DogumTarihi">Doğum Tarihi</label>
             <input type="date" class="form-control" id="DogumTarihi" name="DogumTarihi" class="form-control"  required>
         </div>
-        <div class="form-group">
-            <label for="Biyografi">Biyografi</label>
-            <input type="text" class="form-control" id="Biyografi" name="Biyografi" class="form-control" required>
+        <div class="form-group mt-3">
+            <label asp-for="Biyografi" class="form-label"></label>
+            <textarea asp-for="Biyografi" class="form-control" id="biyografi" rows="4"></textarea>
         </div>
         <div class="form-group">
             <label for="kitaplar">Kitaplar</label>
             <input type="text" id="kitaplar" name="Kitaplar" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Ekle</button>
+        <button type="submit" class="btn btn-success">Ekle</button>
     </form>
 </div>
 

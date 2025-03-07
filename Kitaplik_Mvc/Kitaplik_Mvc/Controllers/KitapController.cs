@@ -40,33 +40,26 @@ namespace Kitaplik_Mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult Ekle(Kitap kitap)
+        public IActionResult Ekle(Kitap kitap, IFormFile Image)
         {
-
-            if (ModelState.IsValid)
+            // Image işlemi
+            if (Image != null && Image.Length > 0)
             {
+                var uniqueFileName = $"{Guid.NewGuid()}_{Path.GetFileName(Image.FileName)}";
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", uniqueFileName);
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    Image.CopyTo(stream);
+                }
+
+                kitap.Image = $"/Images/{uniqueFileName}";
+            }
                 context.Kitaplar.Add(kitap);
                 context.SaveChanges();
                 return RedirectToAction("Listele");
-            }
-
-            // Hata durumunda ViewBag'i tekrar doldur
-            ViewBag.KategoriValue = context.Kategoriler
-                                          .Select(k => new SelectListItem
-                                          {
-                                              Value = k.Id.ToString(),
-                                              Text = k.Isim
-                                          }).ToList();
-
-            ViewBag.YazarValue = context.Yazarlar
-                                       .Select(y => new SelectListItem
-                                       {
-                                           Value = y.Id.ToString(),
-                                           Text = y.Ad
-                                       }).ToList();
-
-            return View(kitap);
         }
+
 
         [HttpGet]
         public IActionResult Guncelle(int id)
@@ -85,11 +78,12 @@ namespace Kitaplik_Mvc.Controllers
                                           }).ToList();
 
             ViewBag.YazarValue = context.Yazarlar
-                                       .Select(y => new SelectListItem
-                                       {
-                                           Value = y.Id.ToString(),
-                                           Text = y.Ad
-                                       }).ToList();
+                           .Select(y => new SelectListItem
+                           {
+                               Value = y.Id.ToString(),
+                               Text = y.Ad + " " + y.Soyad
+                           }).ToList();
+
 
             return View(kitap);
         }
@@ -112,11 +106,12 @@ namespace Kitaplik_Mvc.Controllers
                                           }).ToList();
 
             ViewBag.YazarValue = context.Yazarlar
-                                       .Select(y => new SelectListItem
-                                       {
-                                           Value = y.Id.ToString(),
-                                           Text = y.Ad
-                                       }).ToList();
+                           .Select(y => new SelectListItem
+                           {
+                               Value = y.Id.ToString(),
+                               Text = y.Ad + " " + y.Soyad
+                           }).ToList();
+
 
             return View(kitap);
         }

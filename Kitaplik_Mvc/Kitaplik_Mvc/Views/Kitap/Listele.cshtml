@@ -34,16 +34,16 @@
                         }
                     </td>
                     <td>@kitap.Baslik</td>
-                    <td>@kitap.Yazar?.Ad @kitap.Yazar?.Soyad</td> <!-- Display author's full name -->
+                    <td>@kitap.Yazar?.Ad @kitap.Yazar?.Soyad</td>
                     <td>@kitap.YayinTarihi.ToShortDateString()</td>
                     <td>@kitap.ISBN</td>
-                    <td>@kitap.Kategori?.Adi</td> <!-- Assuming Kategori has a 'Adi' property -->
+                    <td>@kitap.Kategori?.Isim</td>
                     <td>
-                        <a href="@Url.Action("Guncelle", "Kitap", new { id = kitap.KitapID })"
+                        <a href="@Url.Action("Guncelle", "Kitap", new { id = kitap.Id })"
                            class="btn btn-primary">Güncelle</a>
                     </td>
                     <td>
-                        <a href="@Url.Action("Sil", "Kitap", new { id = kitap.KitapID })"
+                        <a href="@Url.Action("Sil", "Kitap", new { id = kitap.Id })"
                            class="btn btn-danger">Sil</a>
                     </td>
                 </tr>
@@ -55,30 +55,3 @@
         <a href="@Url.Action("Ekle", "Kitap")" class="btn btn-success">Kitap Ekle</a>
     </div>
 </div>
-
-<script>
-    // Search books by title
-    function searchBooks() {
-        var input = document.getElementById("searchInput");
-        var filter = input.value.toUpperCase();
-        var table = document.getElementById("bookTable");
-        var tr = table.getElementsByTagName("tr");
-
-        for (var i = 1; i < tr.length; i++) {
-            var td = tr[i].getElementsByTagName("td")[0]; // Başlık column
-            if (td) {
-                var txtValue = td.textContent || td.innerText;
-                tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-            }
-        }
-    }
-
-    // Highlight selected book row
-    function selectBook(row) {
-        var rows = document.getElementsByTagName("tr");
-        for (var i = 1; i < rows.length; i++) {
-            rows[i].style.backgroundColor = ""; // Clear previous selection
-        }
-        row.style.backgroundColor = "#f2f2f2"; // Highlight selected row
-    }
-</script>

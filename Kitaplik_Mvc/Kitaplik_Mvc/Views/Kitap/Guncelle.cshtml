@@ -8,8 +8,9 @@
 <div class="center">
     <h1>Kitap Güncelle</h1>
 
-    <form asp-action="Guncelle" method="post" enctype="multipart/form-data">
+    <form asp-controller="Kitap" asp-action="Guncelle" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Image" />
 
         <div class="form-group">
             <label asp-for="Baslik"></label>
@@ -42,9 +43,15 @@
 
         <div class="form-group">
             <label asp-for="Image"></label>
-            <input asp-for="Image" type="file" class="form-control-file" />
+            <img src="@Url.Content(Model.Image)" alt="Kitap Resmi" class="table-img">
         </div>
 
-        <button type="submit" class="btn btn-primary">Güncelle</button>
+        <div class="form-group">
+            <label for="Image">Kitap Resmi Yükleyin</label>
+            <input type="file" asp-for="Image" class="form-control" id="Image" accept="image/*" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success"> Bilgileri Güncelle</button>
     </form>
 </div>
