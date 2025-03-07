@@ -1,0 +1,37 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Kategori
+
+@{
+    ViewData["Title"] = "Guncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center">
+    <h1>Kategori Güncelle</h1>
+
+    <form asp-action="Guncelle" method="post" class="form">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label asp-for="Isim">Kategori Adı</label>
+            <input type="text" id="Isim" name="Isim" value="@Model.Isim" required class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="kitaplar">Kitaplar</label>
+            <ul class="list-group">
+                @if (Model.Kitaplar != null && Model.Kitaplar.Any())
+                {
+                    foreach (var kitap in Model.Kitaplar)
+                    {
+                        <li class="list-group-item">
+                            @kitap.Baslik
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item">Bu kategoride kitap bulunmamaktadır.</li>
+                }
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+</div>

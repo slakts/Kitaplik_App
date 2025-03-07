@@ -1,0 +1,50 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Kitap
+
+@{
+    ViewData["Title"] = "Guncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center">
+    <h1>Kitap Güncelle</h1>
+
+    <form asp-action="Guncelle" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Baslik"></label>
+            <input asp-for="Baslik" class="form-control" placeholder="Kitap Başlığı Girin" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Yazar"></label>
+            <select asp-for="YazarId" asp-items="ViewBag.Yazarlar" class="form-control">
+                <option value="">Yazar Seçin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="YayinTarihi"></label>
+            <input asp-for="YayinTarihi" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Kategori"></label>
+            <select asp-for="KategoriId" asp-items="ViewBag.Kategoriler" class="form-control">
+                <option value="">Kategori Seçin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ISBN"></label>
+            <input asp-for="ISBN" class="form-control" placeholder="ISBN Girin" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Image"></label>
+            <input asp-for="Image" type="file" class="form-control-file" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+</div>

@@ -1,0 +1,81 @@
+/* Google Fonts: Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Genel Ayarlar */
+html {
+    font-size: 14px;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Sayfa Stili */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(135deg, #0056b3, #007bff, #66a3ff);
+    border-bottom: 3px solid #004494;
+}
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+        color: white !important;
+        font-weight: 500;
+        transition: color 0.3s ease-in-out;
+    }
+
+        .navbar .nav-link:hover {
+            color: #cce5ff !important;
+        }
+
+.navbar-toggler {
+    border: none;
+}
+
+    .navbar-toggler:focus, .navbar-toggler:active {
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+/* Buton Fokus Efekti */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    margin-top: auto;
+    position: relative;
+}
+
+    .footer .footer.text-muted {
+        color: #f8f9fa !important;
+    }
+
+    .footer.text-muted {
+        color: #f8f9fa !important;
+    }

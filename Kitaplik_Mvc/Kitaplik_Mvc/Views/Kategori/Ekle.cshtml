@@ -1,0 +1,22 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Kategori
+
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center">
+    <h1>Kategori Ekle</h1>
+
+    <form action="@Url.Action("Ekle", "Kategori")" method="post">
+        <div class="form-group">
+            <label for="Isim">İsim</label>
+            <input type="text" class="form-control" id="Isim" name="Isim" required>
+        </div>
+        <div class="form-group">
+            <label for="kitaplar">Kitaplar:</label>
+            <input type="text" id="kitaplar" name="Kitaplar" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </form>
+</div>

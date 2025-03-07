@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Yazar>
+
+@{
+    ViewData["Title"] = "Yazarlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center">
+    <h1>Yazar Listesi</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Yazar adı ile ara..." onkeyup="searchBooks()">
+    </div>
+
+    <table class="table" id="bookTable">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Doğum Tarihi</th>
+                <th>Biyografi</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var yazar in Model)
+            {
+                <tr onclick="selectBook(this)">
+                    <td>@yazar.Ad</td>
+                    <td>@yazar.Soyad</td>
+                    <td>@yazar.DogumTarihi.ToShortDateString()</td>
+                    <td>@yazar.Biyografi</td>
+                    <td><a href="@Url.Action("Guncelle", "Yazar", new { id = yazar.Id })" class="btn btn-primary">Güncelle</a></td>
+                    <td><a href="@Url.Action("Sil", "Yazar", new { id = yazar.Id })" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="@Url.Action("Ekle", "Yazar")" class="btn btn-success">Yazar Ekle</a>
+    </div>
+</div>
+
+<script>
+    function searchBooks() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("bookTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Başlık kolonu
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function selectBook(row) {
+        var rows = document.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+            rows[i].style.backgroundColor = ""; // Clear previous selection
+        }
+        row.style.backgroundColor = "#f2f2f2"; // Mark the selected row
+    }
+</script>

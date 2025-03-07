@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Uye>
+
+@{
+    ViewData["Title"] = "Uyeler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center">
+    <h1>Üye Listesi</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Üye ara..." onkeyup="searchMembers()">
+    </div>
+
+    <table class="table" id="MemberTable">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Email</th>
+                <th>Şifre</th>
+                <th>Adres</th>
+                <th>Telefon Numarası</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var uye in Model)
+            {
+                <tr>
+                    <td>@uye.Ad</td>
+                    <td>@uye.Soyad</td>
+                    <td>@uye.Email</td>
+                    <td>@uye.Sifre</td>
+                    <td>@uye.Adres</td>
+                    <td>@uye.TelefonNumarasi</td>
+                    <td><a href="@Url.Action("Guncelle", "Uye", new { id = uye.Id })" class="btn btn-primary">Güncelle</a></td>
+                    <td><a href="@Url.Action("Sil", "Uye", new { id = uye.Id })" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="@Url.Action("UyeOl", "Uye")" class="btn btn-success">Üye Ekle</a>
+    </div>
+
+</div>
+
+<script>
+    function searchMembers() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("MemberTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

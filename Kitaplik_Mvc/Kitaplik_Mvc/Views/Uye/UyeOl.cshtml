@@ -1,0 +1,53 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Uye
+
+@{
+    Layout = "_MainLayout";
+}
+
+<link href="~/Css/login.css" rel="stylesheet" />
+
+<div class="center">
+    <h1>Üye Ol</h1>
+    <form method="post" asp-action="UyeOl" asp-controller="Uye">
+        <div class="txt_field">
+            <input asp-for="Ad" type="text" required>
+            <span></span>
+            <label asp-for="Ad">Ad</label>
+            <span class="text-danger" asp-validation-for="Ad"></span>
+        </div>
+        <div class="txt_field">
+            <input asp-for="Soyad" type="text" required>
+            <span></span>
+            <label asp-for="Soyad">Soyad</label>
+            <span class="text-danger" asp-validation-for="Soyad"></span>
+        </div>
+        <div class="txt_field">
+            <input asp-for="Email" type="email" required>
+            <span></span>
+            <label asp-for="Email">Email</label>
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="txt_field">
+            <input asp-for="Sifre" type="password" required>
+            <span></span>
+            <label asp-for="Sifre">Şifre</label>
+            <span class="text-danger" asp-validation-for="Sifre"></span>
+        </div>
+        <div class="txt_field">
+            <input asp-for="Adres" type="text" required>
+            <span></span>
+            <label asp-for="Adres">Adres</label>
+            <span class="text-danger" asp-validation-for="Adres"></span>
+        </div>
+        <div class="txt_field">
+            <input asp-for="TelefonNumarasi" type="tel" required>
+            <span></span>
+            <label asp-for="TelefonNumarasi">Telefon Numarası</label>
+            <span class="text-danger" asp-validation-for="TelefonNumarasi"></span>
+        </div>
+        <input type="submit" value="Üye Ol">
+        <div class="text-center">
+            <a href="/Uye/Login" class="btn1">Giriş</a>
+        </div>
+    </form>
+</div>

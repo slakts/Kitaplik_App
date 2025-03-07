@@ -1,0 +1,27 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Uye
+
+@{
+    Layout = "_MainLayout";
+}
+
+<link href="~/Css/login.css" rel="stylesheet" />
+
+<div class="center">
+    <h1>Kullanıcı Girişi</h1>
+    <form method="post" asp-action="Login" asp-controller="Uye">
+        <div class="txt_field">
+            <input asp-for="Email" type="email" required>
+            <span></span>
+            <label asp-for="Email">Email</label>
+        </div>
+        <div class="txt_field">
+            <input asp-for="Sifre" type="password" required>
+            <span></span>
+            <label asp-for="Sifre">Şifre</label>
+        </div>
+        <input type="submit" value="Giriş">
+        <div class="text-center">
+            <a href="/Uye/UyeOl">Üye Ol</a>
+        </div>
+    </form>
+</div>

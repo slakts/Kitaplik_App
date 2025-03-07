@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Kategori>
+@using Kitaplik_Mvc.Models.Entities
+
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center">
+    <h1>Kategori Listesi</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Kategori isim ile ara..." onkeyup="searchBooks()">
+    </div>
+
+    <table class="table" id="bookTable">
+        <thead>
+            <tr>
+                <th>İsim</th>
+                <th>Kitaplar</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kategori in Model)
+            {
+                <tr onclick="selectBook(this)">
+                    <td>@kategori.Isim</td>
+                    <td>
+                        @if (kategori.Kitaplar != null && kategori.Kitaplar.Any())
+                        {
+                            <ul>
+                                @foreach (var kitap in kategori.Kitaplar)
+                                {
+                                    <li>@kitap.Baslik</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>Kitap Bulunamadı.</span>
+                        }
+                    </td>
+                    <td><a href="@Url.Action("Guncelle", "Kategori", new { id = kategori.Id })" class="btn btn-primary">Güncelle</a></td>
+                    <td><a href="@Url.Action("Sil", "Kategori", new { id = kategori.Id })" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="@Url.Action("Ekle", "Kategori")" class="btn btn-success">Kategori Ekle</a>
+    </div>
+</div>

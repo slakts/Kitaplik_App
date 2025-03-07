@@ -1,0 +1,62 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Kitap
+
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Kitap Ekleme Sayfası</h1>
+
+<form asp-controller="Kitap" asp-action="Ekle" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="Baslik">Kitap Başlığı</label>
+        <input asp-for="Baslik" class="form-control" id="Baslik" placeholder="Kitap başlığını girin" required />
+        <span asp-validation-for="Baslik" class="text-danger"></span>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="YayinTarihi">Yayın Tarihi</label>
+        <input asp-for="YayinTarihi" class="form-control" id="YayinTarihi" type="date" required />
+        <span asp-validation-for="YayinTarihi" class="text-danger"></span>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <input asp-for="ISBN" class="form-control" id="ISBN" placeholder="ISBN numarasını girin" required />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="KategoriId">Kategori Seçiniz</label>
+        <select asp-for="KategoriId" asp-items="ViewBag.KategoriValue" class="form-control" id="KategoriId">
+            <option value="" disabled selected>Kategori seçin</option>
+        </select>
+        <span asp-validation-for="KategoriId" class="text-danger"></span>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="YazarId">Yazar Seçiniz</label>
+        <select asp-for="YazarId" asp-items="ViewBag.YazarValue" class="form-control" id="YazarId">
+            <option value="" disabled selected>Yazar seçin</option>
+        </select>
+        <span asp-validation-for="YazarId" class="text-danger"></span>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="Image">Kitap Resmi Yükleyin</label>
+        <input type="file" asp-for="Image" class="form-control" id="Image" accept="image/*" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-primary submit mb-4">Ekle</button>
+</form>
+
+
+
+
