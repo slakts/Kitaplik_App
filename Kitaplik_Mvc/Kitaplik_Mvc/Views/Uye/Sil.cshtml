@@ -1,0 +1,45 @@
+﻿@model Kitaplik_Mvc.Models.Entities.Uye
+
+@{
+    ViewData["Title"] = "Sil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h3 class="text-center text-danger">Bu üyeyi silmek istediğinizden emin misiniz?</h3>
+    <br>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">Ad:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Ad)</dd>
+
+                <dt class="col-sm-4">Soyad:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Soyad)</dd>
+
+                <dt class="col-sm-4">E-mail:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt class="col-sm-4">Telefon:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TelefonNumarasi)</dd>
+            </dl>
+            <form asp-action="Sil">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group text-center">
+                    <input type="submit" value="Sil" class="btn btn-danger" />
+                    <a asp-action="Listele" class="btn btn-secondary ml-2">Listeye Geri Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        if (confirm("Bu üyeyi silmek istediğinizden emin misiniz?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
