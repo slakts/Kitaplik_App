@@ -10,10 +10,10 @@
     <h1>Kategori Listesi</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Kategori isim ile ara..." onkeyup="searchBooks()">
+        <input type="text" id="searchInputKategori" placeholder="Kategori ismi ile ara..." onkeyup="searchTable('searchInputKategori', 'categoryTable', 0)">
     </div>
 
-    <table class="table" id="bookTable">
+    <table class="table" id="categoryTable">
         <thead>
             <tr>
                 <th>İsim</th>
@@ -25,7 +25,7 @@
         <tbody>
             @foreach (var kategori in Model)
             {
-                <tr onclick="selectBook(this)">
+                <tr onclick="selectRow(this)">
                     <td>@kategori.Isim</td>
                     <td>
                         @if (kategori.Kitaplar != null && kategori.Kitaplar.Any())
@@ -53,3 +53,5 @@
         <a href="@Url.Action("Ekle", "Kategori")" class="btn btn-success">Kategori Ekle</a>
     </div>
 </div>
+
+<script src="~/js/kitap.js"></script>

@@ -105,13 +105,14 @@ h1 {
     }
 
 .table-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    object-fit: cover;
+    width: 135px; /* Genişliği büyüttüm */
+    height: 200px; /* Yüksekliği büyüttüm */
+    border-radius: 5px; /* Köşe yuvarlama aynı kaldı */
+    object-fit: cover; /* Görüntüyü kırpmadan tam sığdırır */
     display: block;
     margin: auto;
 }
+
 
 /* Durum Göstergesi */
 .status {

@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Yazar>
 @using Kitaplik_Mvc.Models.Entities
 
-
 @{
     ViewData["Title"] = "Yazarlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,10 +10,10 @@
     <h1>Yazar Listesi</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Yazar adı ile ara..." onkeyup="searchBooks()">
+        <input type="text" id="searchInput" placeholder="Yazar adı ile ara..." onkeyup="searchTable('searchInput', 'authorTable', 0)">
     </div>
 
-    <table class="table" id="bookTable">
+    <table class="table" id="authorTable">
         <thead>
             <tr>
                 <th>Ad</th>
@@ -29,7 +28,7 @@
         <tbody>
             @foreach (var yazar in Model)
             {
-                <tr onclick="selectBook(this)">
+                <tr onclick="selectRow(this)">
                     <td>@yazar.Ad</td>
                     <td>@yazar.Soyad</td>
                     <td>@yazar.DogumTarihi.ToShortDateString()</td>
@@ -60,3 +59,4 @@
         <a href="@Url.Action("Ekle", "Yazar")" class="btn btn-success">Yazar Ekle</a>
     </div>
 </div>
+

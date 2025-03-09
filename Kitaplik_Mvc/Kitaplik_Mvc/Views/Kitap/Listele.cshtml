@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<Kitaplik_Mvc.Models.Entities.Kitap>
+@using Kitaplik_Mvc.Models.Entities
+
+@{
     ViewData["Title"] = "Kitaplar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,7 +10,7 @@
     <h1>Kitap Listesi</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Başlıkla Ara..." onkeyup="searchBooks()">
+        <input type="text" id="searchInput" placeholder="Başlıkla Ara..." onkeyup="searchTable('searchInput', 'bookTable', 1)">
     </div>
 
     <table class="table" id="bookTable">
@@ -26,12 +29,9 @@
         <tbody>
             @foreach (var kitap in Model)
             {
-                <tr onclick="selectBook(this)">
+                <tr onclick="selectRow(this)">
                     <td>
-                        @if (!string.IsNullOrEmpty(kitap.Image))
-                        {
-                            <img src="@Url.Content($"~/Images/{kitap.Image}")" alt="Kitap Görseli" width="50">
-                        }
+                        <img src="@Url.Content(kitap.Image)" class="table-img" alt="Kitap Resmi">
                     </td>
                     <td>@kitap.Baslik</td>
                     <td>@kitap.Yazar?.Ad @kitap.Yazar?.Soyad</td>
