@@ -1,0 +1,35 @@
+﻿@using Kitaplik_Mvc.Models.Entities
+@model Odunc
+
+<div class="container">
+    <div class="row pt-3 pb-4">
+        <h1>Ödünç Kaydını Güncelle</h1>
+    </div>
+
+    <form asp-controller="Odunc" asp-action="Guncelle" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label class="form-label">Üye Seç</label>
+            <select asp-for="UyeID" class="form-control" asp-items="ViewBag.UyeValue"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Kitap Seç</label>
+            <select asp-for="KitapID" class="form-control" asp-items="ViewBag.KitapValue"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ödünç Alma Tarihi</label>
+            <input type="date" asp-for="OduncAlimTarihi" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">İade Tarihi</label>
+            <input type="date" asp-for="IadeTarihi" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Güncelle</button>
+        <a asp-controller="Odunc" asp-action="Listele" class="btn btn-secondary">İptal</a>
+    </form>
+</div>

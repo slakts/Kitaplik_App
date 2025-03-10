@@ -13,13 +13,13 @@
         <input type="text" id="searchInputKategori" placeholder="Kategori ismi ile ara..." onkeyup="searchTable('searchInputKategori', 'categoryTable', 0)">
     </div>
 
-    <table class="table" id="categoryTable">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>İsim</th>
                 <th>Kitaplar</th>
-                <th>Güncelle</th>
-                <th>Sil</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -42,16 +42,15 @@
                             <span>Kitap Bulunamadı.</span>
                         }
                     </td>
-                    <td><a href="@Url.Action("Guncelle", "Kategori", new { id = kategori.Id })" class="btn btn-primary">Güncelle</a></td>
-                    <td><a href="@Url.Action("Sil", "Kategori", new { id = kategori.Id })" class="btn btn-danger">Sil</a></td>
+                    <td><a asp-controller="Kategori" asp-action="Guncelle" asp-route-id="@kategori.Id" class="btn btn-primary">Güncelle</a></td>
+                    <td><a asp-controller="Kategori" asp-action="Sil" asp-route-id="@kategori.Id" class="btn btn-danger">Sil</a></td>
                 </tr>
             }
         </tbody>
     </table>
 
     <div class="text-right">
-        <a href="@Url.Action("Ekle", "Kategori")" class="btn btn-success">Kategori Ekle</a>
+        <a asp-controller="Kategori" asp-action="Ekle" class="btn btn-success">Kategori Ekle</a>
     </div>
 </div>
 
-<script src="~/js/kitap.js"></script>

@@ -13,7 +13,7 @@
         <input type="text" id="searchInput" placeholder="Yazar adı ile ara..." onkeyup="searchTable('searchInput', 'authorTable', 0)">
     </div>
 
-    <table class="table" id="authorTable">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Ad</th>
@@ -21,8 +21,8 @@
                 <th>Doğum Tarihi</th>
                 <th>Biyografi</th>
                 <th>Kitaplar</th>
-                <th>Güncelle</th>
-                <th>Sil</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -48,15 +48,15 @@
                             <span>Kitap Bulunamadı.</span>
                         }
                     </td>
-                    <td><a href="@Url.Action("Guncelle", "Yazar", new { id = yazar.Id })" class="btn btn-primary">Güncelle</a></td>
-                    <td><a href="@Url.Action("Sil", "Yazar", new { id = yazar.Id })" class="btn btn-danger">Sil</a></td>
+                    <td><a asp-controller="Yazar" asp-action="Guncelle" asp-route-id="@yazar.Id" class="btn btn-primary">Güncelle</a></td>
+                    <td><a asp-controller="Yazar" asp-action="Sil" asp-route-id="@yazar.Id" class="btn btn-danger">Sil</a></td>
                 </tr>
             }
         </tbody>
     </table>
 
     <div class="text-right">
-        <a href="@Url.Action("Ekle", "Yazar")" class="btn btn-success">Yazar Ekle</a>
+        <a asp-controller="Yazar" asp-action="Ekle" class="btn btn-success">Yazar Ekle</a>
     </div>
 </div>
 

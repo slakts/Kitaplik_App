@@ -1,0 +1,47 @@
+﻿@using Kitaplik_Mvc.Models.Entities
+@model List<Odunc>
+
+@if (TempData["basarili"] != null)
+{
+    <h2 style="color:red">@TempData["basarili"]</h2>
+}
+
+<div class="container">
+    <div class="row pt-3 pb-4">
+        <h1>Ödünç Kitaplar</h1>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Üye</th>
+                <th>Kitap</th>
+                <th>Ödünç Alma Tarihi</th>
+                <th>İade Tarihi</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var odunc in Model)
+            {
+                <tr>
+                    <td>@odunc.Uye.Ad @odunc.Uye.Soyad</td>
+                    <td>@odunc.Kitap.Baslik</td>
+                    <td>@odunc.OduncAlimTarihi.ToShortDateString()</td>
+                    <td>@(odunc.IadeTarihi?.ToShortDateString() ?? "Henüz İade Edilmedi")</td>
+                    <td>
+                        <a asp-controller="Odunc" asp-action="Guncelle" asp-route-id="@odunc.Id" class="btn btn-success">Güncelle</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Odunc" asp-action="Sil" asp-route-id="@odunc.Id" class="btn btn-danger">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a asp-controller="Odunc" asp-action="Ekle" class="btn btn-success">Yeni Ödünç Kaydı Oluştur</a>
+    </div>
+</div>

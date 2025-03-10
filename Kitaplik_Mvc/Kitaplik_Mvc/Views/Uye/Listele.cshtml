@@ -11,7 +11,7 @@
         <input type="text" id="searchInput" placeholder="Üye ara..." onkeyup="searchMembers()">
     </div>
 
-    <table class="table" id="MemberTable">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Ad</th>
@@ -20,8 +20,8 @@
                 <th>Şifre</th>
                 <th>Adres</th>
                 <th>Telefon Numarası</th>
-                <th>Güncelle</th>
-                <th>Sil</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,15 +34,17 @@
                     <td>@uye.Sifre</td>
                     <td>@uye.Adres</td>
                     <td>@uye.TelefonNumarasi</td>
-                    <td><a href="@Url.Action("Guncelle", "Uye", new { id = uye.Id })" class="btn btn-primary">Güncelle</a></td>
-                    <td><a href="@Url.Action("Sil", "Uye", new { id = uye.Id })" class="btn btn-danger">Sil</a></td>
+                    <td>
+                        <a asp-controller="Uye" asp-action="Guncelle" asp-route-id="@uye.Id" class="btn btn-primary">Güncelle</a>
+                    </td>
+                    <td><a asp-controller="Uye" asp-action="Sil" asp-route-id="@uye.Id" class="btn btn-danger">Sil</a></td>
                 </tr>
             }
         </tbody>
     </table>
 
     <div class="text-right">
-        <a href="@Url.Action("UyeOl", "Uye")" class="btn btn-success">Üye Ekle</a>
+        <a asp-controller="Uye" asp-action="UyeOl" class="btn btn-success">Üye Ekle</a>
     </div>
 
 </div>
