@@ -8,7 +8,7 @@ namespace Kitaplik_Mvc.Controllers
 {
     public class OduncController : Controller
     {
-        VeriTabaniContext context = new();
+        private readonly VeriTabaniContext context = new();
 
         public IActionResult Listele()
         {
@@ -50,7 +50,11 @@ namespace Kitaplik_Mvc.Controllers
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var odunc = context.Oduncler.Find(id);
+            var odunc = context.Oduncler
+                               .Include(o => o.Kitap)
+                               .Include(o => o.Uye)
+                               .FirstOrDefault(o => o.Id == id);
+
             if (odunc == null)
             {
                 return NotFound();
@@ -93,7 +97,10 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Sil(int id)
         {
-            var odunc = context.Oduncler.Find(id);
+            var odunc = context.Oduncler
+                               .Include(o => o.Kitap)
+                               .FirstOrDefault(o => o.Id == id);
+
             if (odunc != null)
             {
                 context.Oduncler.Remove(odunc);
