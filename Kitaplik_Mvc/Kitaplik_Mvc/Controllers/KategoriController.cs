@@ -7,14 +7,21 @@ namespace Kitaplik_Mvc.Controllers
 {
     public class KategoriController : Controller
     {
-        VeriTabaniContext context = new();
+        private readonly VeriTabaniContext _context;
+
+        public KategoriController(VeriTabaniContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Listele()
         {
-            List<Kategori> kategoriList = context.Kategoriler
+            List<Kategori> kategoriList = _context.Kategoriler
                 .Include(k => k.Kitaplar)
                 .ToList();
             return View(kategoriList);
         }
+
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -26,8 +33,8 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Kategoriler.Add(kategori);
-                context.SaveChanges();
+                _context.Kategoriler.Add(kategori);
+                _context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(kategori);
@@ -36,9 +43,9 @@ namespace Kitaplik_Mvc.Controllers
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var kategori = context.Kategoriler
+            var kategori = _context.Kategoriler
                 .Include(k => k.Kitaplar)
-                .FirstOrDefault(k => k.Id == id); ;
+                .FirstOrDefault(k => k.Id == id);
             if (kategori == null)
             {
                 return NotFound();
@@ -51,14 +58,14 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingKategori = context.Kategoriler.FirstOrDefault(k => k.Id == kategori.Id);
+                var existingKategori = _context.Kategoriler.FirstOrDefault(k => k.Id == kategori.Id);
                 if (existingKategori == null)
                 {
                     return NotFound();
                 }
 
                 existingKategori.Isim = kategori.Isim;
-                context.SaveChanges();
+                _context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(kategori);
@@ -66,13 +73,13 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Sil(int id)
         {
-            var kategori = context.Kategoriler.FirstOrDefault(k => k.Id == id);
+            var kategori = _context.Kategoriler.FirstOrDefault(k => k.Id == id);
             if (kategori == null)
             {
                 return NotFound();
             }
-            context.Kategoriler.Remove(kategori);
-            context.SaveChanges();
+            _context.Kategoriler.Remove(kategori);
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
     }

@@ -6,19 +6,23 @@ namespace Kitaplik_Mvc.Controllers
 {
     public class UyeController : Controller
     {
-        VeriTabaniContext context = new();
+        private readonly VeriTabaniContext _context;
+
+        public UyeController(VeriTabaniContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public IActionResult Login()
         {
-
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(Uye uye)
         {
-            var data = context.Uyeler.FirstOrDefault(x => x.Email == uye.Email && x.Sifre == uye.Sifre);
+            var data = _context.Uyeler.FirstOrDefault(x => x.Email == uye.Email && x.Sifre == uye.Sifre);
             if (data == null)
             {
                 return View();
@@ -40,8 +44,8 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Uyeler.Add(uye);
-                context.SaveChanges();
+                _context.Uyeler.Add(uye);
+                _context.SaveChanges();
                 return RedirectToAction("Login");
             }
             return View(uye);
@@ -49,14 +53,14 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Listele()
         {
-            List<Uye> uyeList = context.Uyeler.ToList();
+            List<Uye> uyeList = _context.Uyeler.ToList();
             return View(uyeList);
         }
 
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var uye = context.Uyeler.Find(id);
+            var uye = _context.Uyeler.Find(id);
             if (uye == null)
             {
                 return NotFound();
@@ -69,8 +73,8 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Uyeler.Update(uye);
-                context.SaveChanges();
+                _context.Uyeler.Update(uye);
+                _context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(uye);
@@ -78,11 +82,11 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Sil(int id)
         {
-            var uye = context.Uyeler.Find(id);
+            var uye = _context.Uyeler.Find(id);
             if (uye != null)
             {
-                context.Uyeler.Remove(uye);
-                context.SaveChanges();
+                _context.Uyeler.Remove(uye);
+                _context.SaveChanges();
             }
             return RedirectToAction("Listele");
         }

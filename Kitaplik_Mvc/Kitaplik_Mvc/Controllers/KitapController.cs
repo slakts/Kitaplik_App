@@ -8,11 +8,16 @@ namespace Kitaplik_Mvc.Controllers
 {
     public class KitapController : Controller
     {
-        VeriTabaniContext context = new();
+        private readonly VeriTabaniContext _context;
+
+        public KitapController(VeriTabaniContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Listele()
         {
-            var kitapList = context.Kitaplar
+            var kitapList = _context.Kitaplar
                                    .Include(k => k.Kategori)
                                    .Include(k => k.Yazar)
                                    .ToList();
@@ -22,14 +27,14 @@ namespace Kitaplik_Mvc.Controllers
         [HttpGet]
         public IActionResult Ekle()
         {
-            ViewBag.KategoriValue = context.Kategoriler
+            ViewBag.KategoriValue = _context.Kategoriler
                                            .Select(k => new SelectListItem
                                            {
                                                Value = k.Id.ToString(),
                                                Text = k.Isim
                                            }).ToList();
 
-            ViewBag.YazarValue = context.Yazarlar
+            ViewBag.YazarValue = _context.Yazarlar
                                         .Select(y => new SelectListItem
                                         {
                                             Value = y.Id.ToString(),
@@ -55,29 +60,29 @@ namespace Kitaplik_Mvc.Controllers
                 kitap.Image = $"/Images/{uniqueFileName}";
             }
 
-            context.Kitaplar.Add(kitap);
-            context.SaveChanges();
+            _context.Kitaplar.Add(kitap);
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
 
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var kitap = context.Kitaplar.Find(id);
+            var kitap = _context.Kitaplar.Find(id);
 
             if (kitap == null)
             {
                 return NotFound();
             }
 
-            ViewBag.KategoriValue = context.Kategoriler
+            ViewBag.KategoriValue = _context.Kategoriler
                                            .Select(k => new SelectListItem
                                            {
                                                Value = k.Id.ToString(),
                                                Text = k.Isim
                                            }).ToList();
 
-            ViewBag.YazarValue = context.Yazarlar
+            ViewBag.YazarValue = _context.Yazarlar
                                         .Select(y => new SelectListItem
                                         {
                                             Value = y.Id.ToString(),
@@ -90,7 +95,7 @@ namespace Kitaplik_Mvc.Controllers
         [HttpPost]
         public IActionResult Guncelle(Kitap kitap, IFormFile? Image)
         {
-            var mevcutKitap = context.Kitaplar.Find(kitap.Id);
+            var mevcutKitap = _context.Kitaplar.Find(kitap.Id);
             if (mevcutKitap == null)
             {
                 return NotFound();
@@ -127,13 +132,13 @@ namespace Kitaplik_Mvc.Controllers
                 mevcutKitap.Image = $"/Images/{uniqueFileName}";
             }
 
-            context.SaveChanges(); // Update işlemi gereksiz
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
 
         public IActionResult Sil(int id)
         {
-            var kitap = context.Kitaplar.Find(id);
+            var kitap = _context.Kitaplar.Find(id);
             if (kitap != null)
             {
                 // Eski resmi sil
@@ -146,8 +151,8 @@ namespace Kitaplik_Mvc.Controllers
                     }
                 }
 
-                context.Kitaplar.Remove(kitap);
-                context.SaveChanges();
+                _context.Kitaplar.Remove(kitap);
+                _context.SaveChanges();
             }
 
             return RedirectToAction("Listele");

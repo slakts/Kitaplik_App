@@ -38,7 +38,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Odunc" asp-action="Listele">Kitap Kiralama</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+
+                    <partial name="_LoginPartial"></partial>    
+                    @* <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -57,7 +59,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Uye" asp-action="Login">Giriş Yap</a>
                             </li>
                         }
-                    </ul>
+                    </ul> *@
                 </div>
             </div>
         </nav>

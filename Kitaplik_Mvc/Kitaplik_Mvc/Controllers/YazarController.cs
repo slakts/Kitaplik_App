@@ -1,22 +1,26 @@
-﻿using Kitaplik_Mvc.Models.Entities;
-using Kitaplik_Mvc.Models;
+﻿using Kitaplik_Mvc.Models;
+using Kitaplik_Mvc.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kitaplik_Mvc.Controllers
 {
     public class YazarController : Controller
     {
-        VeriTabaniContext context = new();
+        private readonly VeriTabaniContext _context;
 
-        // Yazar Listeleme
+        public YazarController(VeriTabaniContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Listele()
         {
-            var yazarList = context.Yazarlar
-                                   .Include(y => y.Kitaplar)
-                                   .ToList();
+            var yazarList = _context.Yazarlar.Include(y => y.Kitaplar).ToList();
             return View(yazarList);
         }
+
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -28,18 +32,17 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Yazarlar.Add(yazar);
-                context.SaveChanges();
+                _context.Yazarlar.Add(yazar);
+                _context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(yazar);
         }
+
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var yazar = context.Yazarlar
-                               .Include(y => y.Kitaplar)
-                               .FirstOrDefault(y => y.Id == id);
+            var yazar = _context.Yazarlar.Find(id);
             if (yazar == null)
             {
                 return NotFound();
@@ -52,8 +55,7 @@ namespace Kitaplik_Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingYazar = context.Yazarlar
-                                           .FirstOrDefault(y => y.Id == yazar.Id);
+                var existingYazar = _context.Yazarlar.Find(yazar.Id);
                 if (existingYazar == null)
                 {
                     return NotFound();
@@ -62,7 +64,7 @@ namespace Kitaplik_Mvc.Controllers
                 existingYazar.Soyad = yazar.Soyad;
                 existingYazar.DogumTarihi = yazar.DogumTarihi;
                 existingYazar.Biyografi = yazar.Biyografi;
-                context.SaveChanges();
+                _context.SaveChanges();
                 return RedirectToAction("Listele");
             }
             return View(yazar);
@@ -70,13 +72,13 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Sil(int id)
         {
-            var yazar = context.Yazarlar.FirstOrDefault(y => y.Id == id);
+            var yazar = _context.Yazarlar.Find(id);
             if (yazar == null)
             {
                 return NotFound();
             }
-            context.Yazarlar.Remove(yazar);
-            context.SaveChanges();
+            _context.Yazarlar.Remove(yazar);
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
     }

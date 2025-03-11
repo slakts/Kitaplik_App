@@ -8,71 +8,70 @@ namespace Kitaplik_Mvc.Controllers
 {
     public class OduncController : Controller
     {
-        private readonly VeriTabaniContext context = new();
+        private readonly VeriTabaniContext _context;
+
+        public OduncController(VeriTabaniContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Listele()
         {
-            var oduncList = context.Oduncler
-                                    .Include(o => o.Kitap)
-                                    .Include(o => o.Uye)
-                                    .ToList();
+            var oduncList = _context.Oduncler.Include(o => o.Kitap).Include(o => o.Uye).ToList();
             return View(oduncList);
         }
 
         [HttpGet]
         public IActionResult Ekle()
         {
-            ViewBag.KitapValue = context.Kitaplar
-                                         .Select(k => new SelectListItem
-                                         {
-                                             Value = k.Id.ToString(),
-                                             Text = k.Baslik
-                                         }).ToList();
+            ViewBag.KitapValue = _context.Kitaplar.Select(k => new SelectListItem
+            {
+                Value = k.Id.ToString(),
+                Text = k.Baslik
+            }).ToList();
 
-            ViewBag.UyeValue = context.Uyeler
-                                       .Select(u => new SelectListItem
-                                       {
-                                           Value = u.Id.ToString(),
-                                           Text = u.Ad + " " + u.Soyad
-                                       }).ToList();
+            ViewBag.UyeValue = _context.Uyeler.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Ad + " " + u.Soyad
+            }).ToList();
+
             return View();
         }
 
         [HttpPost]
         public IActionResult Ekle(Odunc odunc)
         {
-            odunc.OduncAlimTarihi = DateTime.Now;
-            context.Oduncler.Add(odunc);
-            context.SaveChanges();
-            return RedirectToAction("Listele");
+            if (ModelState.IsValid)
+            {
+                odunc.OduncAlimTarihi = DateTime.Now;
+                _context.Oduncler.Add(odunc);
+                _context.SaveChanges();
+                return RedirectToAction("Listele");
+            }
+            return View(odunc);
         }
 
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var odunc = context.Oduncler
-                               .Include(o => o.Kitap)
-                               .Include(o => o.Uye)
-                               .FirstOrDefault(o => o.Id == id);
-
+            var odunc = _context.Oduncler.Include(o => o.Kitap).Include(o => o.Uye).FirstOrDefault(o => o.Id == id);
             if (odunc == null)
             {
                 return NotFound();
             }
 
-            ViewBag.KitapValue = context.Kitaplar
-                                         .Select(k => new SelectListItem
-                                         {
-                                             Value = k.Id.ToString(),
-                                             Text = k.Baslik
-                                         }).ToList();
+            ViewBag.KitapValue = _context.Kitaplar.Select(k => new SelectListItem
+            {
+                Value = k.Id.ToString(),
+                Text = k.Baslik
+            }).ToList();
 
-            ViewBag.UyeValue = context.Uyeler
-                                       .Select(u => new SelectListItem
-                                       {
-                                           Value = u.Id.ToString(),
-                                           Text = u.Ad + " " + u.Soyad
-                                       }).ToList();
+            ViewBag.UyeValue = _context.Uyeler.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Ad + " " + u.Soyad
+            }).ToList();
 
             return View(odunc);
         }
@@ -80,7 +79,7 @@ namespace Kitaplik_Mvc.Controllers
         [HttpPost]
         public IActionResult Guncelle(Odunc odunc)
         {
-            var mevcutOdunc = context.Oduncler.Find(odunc.Id);
+            var mevcutOdunc = _context.Oduncler.Find(odunc.Id);
             if (mevcutOdunc == null)
             {
                 return NotFound();
@@ -91,22 +90,20 @@ namespace Kitaplik_Mvc.Controllers
             mevcutOdunc.OduncAlimTarihi = odunc.OduncAlimTarihi;
             mevcutOdunc.IadeTarihi = odunc.IadeTarihi;
 
-            context.SaveChanges();
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
 
         public IActionResult Sil(int id)
         {
-            var odunc = context.Oduncler
-                               .Include(o => o.Kitap)
-                               .FirstOrDefault(o => o.Id == id);
-
-            if (odunc != null)
+            var odunc = _context.Oduncler.Include(o => o.Kitap).FirstOrDefault(o => o.Id == id);
+            if (odunc == null)
             {
-                context.Oduncler.Remove(odunc);
-                context.SaveChanges();
+                return NotFound();
             }
 
+            _context.Oduncler.Remove(odunc);
+            _context.SaveChanges();
             return RedirectToAction("Listele");
         }
     }
