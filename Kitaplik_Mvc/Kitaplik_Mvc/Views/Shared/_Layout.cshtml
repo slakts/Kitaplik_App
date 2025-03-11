@@ -24,11 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        
+
                         @if (User.IsInRole(UserRoles.Role_Admin))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Kitap" asp-action="Listele">Kitaplar</a>
+                                <a class="nav-link" asp-area="" asp-controller="Kitap" asp-action="Listele">Kitap İşlemleri</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Yazar" asp-action="Listele">Yazarlar</a>
@@ -38,6 +38,13 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Odunc" asp-action="Listele">Kitap Kiralama</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(UserRoles.Role_Ogrenci))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Kitap" asp-action="Listele">Kitap Listesi</a>
                             </li>
                         }
 

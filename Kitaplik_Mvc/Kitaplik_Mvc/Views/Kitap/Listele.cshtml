@@ -22,8 +22,13 @@
                 <th>Yayın Tarihi</th>
                 <th>ISBN</th>
                 <th>Kategori</th>
-                <th></th>
-                <th></th>
+
+                @if (User.IsInRole(UserRoles.Role_Admin))
+                {
+                    <th></th>
+                    <th></th>
+                }
+
             </tr>
         </thead>
         <tbody>
@@ -38,18 +43,27 @@
                     <td>@kitap.YayinTarihi.ToShortDateString()</td>
                     <td>@kitap.ISBN</td>
                     <td>@kitap.Kategori?.Isim</td>
-                    <td>
-                        <a asp-controller="Kitap" asp-action="Guncelle" asp-route-id="@kitap.Id" class="btn btn-primary">Güncelle</a>
-                    </td>
-                    <td>
-                        <a asp-controller="Kitap" asp-action="Sil" asp-route-id="@kitap.Id" class="btn btn-danger">Sil</a>
-                    </td>
+
+                    @if (User.IsInRole(UserRoles.Role_Admin))
+                    {
+                        <td>
+                            <a asp-controller="Kitap" asp-action="Guncelle" asp-route-id="@kitap.Id" class="btn btn-primary">Güncelle</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Kitap" asp-action="Sil" asp-route-id="@kitap.Id" class="btn btn-danger">Sil</a>
+                        </td>
+                    }
+
                 </tr>
             }
         </tbody>
     </table>
 
-    <div class="text-right">
-        <a asp-controller="Kitap" asp-action="Ekle" class="btn btn-success">Kitap Ekle</a>
-    </div>
+    @if (User.IsInRole(UserRoles.Role_Admin))
+    {
+        <div class="text-right">
+            <a asp-controller="Kitap" asp-action="Ekle" class="btn btn-success">Kitap Ekle</a>
+        </div>
+    }
+
 </div>

@@ -1,5 +1,6 @@
 ﻿using Kitaplik_Mvc.Models;
 using Kitaplik_Mvc.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace Kitaplik_Mvc.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin,Ogrenci")]
         public IActionResult Listele()
         {
             var kitapList = _context.Kitaplar
@@ -24,6 +26,7 @@ namespace Kitaplik_Mvc.Controllers
             return View(kitapList);
         }
 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -44,6 +47,7 @@ namespace Kitaplik_Mvc.Controllers
             return View();
         }
 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         [HttpPost]
         public IActionResult Ekle(Kitap kitap, IFormFile? Image)
         {
@@ -65,6 +69,7 @@ namespace Kitaplik_Mvc.Controllers
             return RedirectToAction("Listele");
         }
 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
@@ -92,6 +97,7 @@ namespace Kitaplik_Mvc.Controllers
             return View(kitap);
         }
 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         [HttpPost]
         public IActionResult Guncelle(Kitap kitap, IFormFile? Image)
         {
@@ -136,6 +142,7 @@ namespace Kitaplik_Mvc.Controllers
             return RedirectToAction("Listele");
         }
 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult Sil(int id)
         {
             var kitap = _context.Kitaplar.Find(id);
