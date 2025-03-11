@@ -15,27 +15,34 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kitaplik</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Kitap" asp-action="Listele">Kitaplar</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        
+                        @if (User.IsInRole(UserRoles.Role_Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Kitap" asp-action="Listele">Kitaplar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Yazar" asp-action="Listele">Yazarlar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Kategori" asp-action="Listele">Kategoriler</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Odunc" asp-action="Listele">Kitap Kiralama</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Yazar" asp-action="Listele">Yazarlar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Uye" asp-action="Listele">Üyeler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Kategori" asp-action="Listele">Kategoriler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Odunc" asp-action="Listele">Kitap Kiralama</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">İletişim</a>
                         </li>
                     </ul>
 
@@ -72,7 +79,7 @@
 
     <footer class="footer text-muted">
         <div>
-            © 2025 - Kitaplik_MVC - <a href="/Home/Privacy">Privacy</a>
+            © 2025 Yazılım Teknolojileri Akademisi - Online Kitaplik - <a href="/Home/Privacy">İletişim</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Kitaplik_Mvc.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Kitaplik_Mvc
 {
@@ -18,11 +19,11 @@ namespace Kitaplik_Mvc
             builder.Services.AddDbContext<VeriTabaniContext>(options => options.UseSqlServer(connectionString));
 
             // Kimlik doðrulama yapýlandýrmasý
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
             })
-            .AddEntityFrameworkStores<VeriTabaniContext>();
+            .AddEntityFrameworkStores<VeriTabaniContext>().AddDefaultTokenProviders();
 
 
             builder.Services.AddRazorPages(); // Razor sayfalarýný ekle
@@ -37,6 +38,9 @@ namespace Kitaplik_Mvc
 
             // MVC servislerini ekle
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IEmailSender, EmailSender>(); // E-posta gönderme hizmetini ekle
+
 
             var app = builder.Build();
 

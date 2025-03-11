@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Kitaplik_Mvc.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -97,6 +98,12 @@ namespace Kitaplik_Mvc.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            public int Ogrencino { get; set; }
+            public string? Adres { get; set; }
+            public string? Fakulte { get; set; }
+            public string? Bolum { get; set; }
         }
 
 
@@ -116,6 +123,12 @@ namespace Kitaplik_Mvc.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                user.Ogrencino = Input.Ogrencino;
+                user.Adres = Input.Adres;
+                user.Fakulte = Input.Fakulte;
+                user.Bolum = Input.Bolum;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -154,11 +167,11 @@ namespace Kitaplik_Mvc.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {

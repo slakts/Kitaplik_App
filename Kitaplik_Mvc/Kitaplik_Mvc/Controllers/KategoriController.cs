@@ -1,10 +1,12 @@
 ﻿using Kitaplik_Mvc.Models;
 using Kitaplik_Mvc.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kitaplik_Mvc.Controllers
 {
+    [Authorize(Roles = UserRoles.Role_Admin)]
     public class KategoriController : Controller
     {
         private readonly VeriTabaniContext _context;

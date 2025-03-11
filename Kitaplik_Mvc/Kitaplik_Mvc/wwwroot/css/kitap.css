@@ -31,6 +31,8 @@ body {
 .navbar {
     background: linear-gradient(135deg, #0056b3, #007bff, #66a3ff);
     border-bottom: 3px solid #004494;
+    height: 80px;
+    font-size: 16px;
 }
 
     .navbar .navbar-brand,
@@ -59,6 +61,12 @@ h1 {
     font-size: 24px;
     color: #0056b3;
     padding: 20px;
+}
+
+/* Başlık */
+h3 {
+    text-align: center;
+    color: #0056b3;
 }
 
 .search-container {
@@ -187,4 +195,3 @@ h1 {
     .footer.text-muted {
         color: #f8f9fa !important;
     }
-
