@@ -93,14 +93,12 @@ namespace KitaplikMvc.Migrations
                     b.Property<DateTime>("OduncAlimTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UyeID")
+                    b.Property<int>("OgrenciID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("KitapID");
-
-                    b.HasIndex("UyeID");
 
                     b.ToTable("Oduncler");
                 });
@@ -323,12 +321,10 @@ namespace KitaplikMvc.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -365,12 +361,10 @@ namespace KitaplikMvc.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -426,15 +420,7 @@ namespace KitaplikMvc.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kitaplik_Mvc.Models.Entities.Uye", "Uye")
-                        .WithMany()
-                        .HasForeignKey("UyeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Kitap");
-
-                    b.Navigation("Uye");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

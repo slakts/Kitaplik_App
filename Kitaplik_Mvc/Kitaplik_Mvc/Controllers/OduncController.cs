@@ -17,24 +17,19 @@ namespace Kitaplik_Mvc.Controllers
 
         public IActionResult Listele()
         {
-            var oduncList = _context.Oduncler.Include(o => o.Kitap).Include(o => o.Uye).ToList();
+            var oduncList = _context.Oduncler.Include(o => o.Kitap).ToList();
             return View(oduncList);
         }
 
         [HttpGet]
         public IActionResult Ekle()
         {
-            ViewBag.KitapValue = _context.Kitaplar.Select(k => new SelectListItem
-            {
-                Value = k.Id.ToString(),
-                Text = k.Baslik
-            }).ToList();
-
-            ViewBag.UyeValue = _context.Uyeler.Select(u => new SelectListItem
-            {
-                Value = u.Id.ToString(),
-                Text = u.Ad + " " + u.Soyad
-            }).ToList();
+            ViewBag.KitapList = _context.Kitaplar
+                .Select(k => new SelectListItem
+                {
+                    Value = k.Id.ToString(),
+                    Text = k.Baslik
+                }).ToList();
 
             return View();
         }
@@ -42,36 +37,29 @@ namespace Kitaplik_Mvc.Controllers
         [HttpPost]
         public IActionResult Ekle(Odunc odunc)
         {
-            if (ModelState.IsValid)
-            {
+            
                 odunc.OduncAlimTarihi = DateTime.Now;
                 _context.Oduncler.Add(odunc);
                 _context.SaveChanges();
+                TempData["basarili"] = "Yeni ödünç kaydı başarıyla oluşturuldu!";
                 return RedirectToAction("Listele");
-            }
-            return View(odunc);
         }
 
         [HttpGet]
         public IActionResult Guncelle(int id)
         {
-            var odunc = _context.Oduncler.Include(o => o.Kitap).Include(o => o.Uye).FirstOrDefault(o => o.Id == id);
+            var odunc = _context.Oduncler.FirstOrDefault(o => o.Id == id);
             if (odunc == null)
             {
                 return NotFound();
             }
 
-            ViewBag.KitapValue = _context.Kitaplar.Select(k => new SelectListItem
-            {
-                Value = k.Id.ToString(),
-                Text = k.Baslik
-            }).ToList();
-
-            ViewBag.UyeValue = _context.Uyeler.Select(u => new SelectListItem
-            {
-                Value = u.Id.ToString(),
-                Text = u.Ad + " " + u.Soyad
-            }).ToList();
+            ViewBag.KitapList = _context.Kitaplar
+                .Select(k => new SelectListItem
+                {
+                    Value = k.Id.ToString(),
+                    Text = k.Baslik
+                }).ToList();
 
             return View(odunc);
         }
@@ -79,24 +67,15 @@ namespace Kitaplik_Mvc.Controllers
         [HttpPost]
         public IActionResult Guncelle(Odunc odunc)
         {
-            var mevcutOdunc = _context.Oduncler.Find(odunc.Id);
-            if (mevcutOdunc == null)
-            {
-                return NotFound();
-            }
-
-            mevcutOdunc.KitapID = odunc.KitapID;
-            mevcutOdunc.UyeID = odunc.UyeID;
-            mevcutOdunc.OduncAlimTarihi = odunc.OduncAlimTarihi;
-            mevcutOdunc.IadeTarihi = odunc.IadeTarihi;
-
-            _context.SaveChanges();
-            return RedirectToAction("Listele");
+                _context.Oduncler.Update(odunc);
+                _context.SaveChanges();
+                TempData["basarili"] = "Ödünç kaydı başarıyla güncellendi!";
+                return RedirectToAction("Listele");
         }
 
         public IActionResult Sil(int id)
         {
-            var odunc = _context.Oduncler.Include(o => o.Kitap).FirstOrDefault(o => o.Id == id);
+            var odunc = _context.Oduncler.FirstOrDefault(o => o.Id == id);
             if (odunc == null)
             {
                 return NotFound();
@@ -104,6 +83,7 @@ namespace Kitaplik_Mvc.Controllers
 
             _context.Oduncler.Remove(odunc);
             _context.SaveChanges();
+            TempData["basarili"] = "Ödünç kaydı başarıyla silindi!";
             return RedirectToAction("Listele");
         }
     }

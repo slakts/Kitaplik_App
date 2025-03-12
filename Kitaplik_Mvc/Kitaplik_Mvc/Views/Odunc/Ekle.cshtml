@@ -8,13 +8,13 @@
 
     <form asp-controller="Odunc" asp-action="Ekle" method="post">
         <div class="mb-3">
-            <label class="form-label">Üye Seç</label>
-            <select asp-for="UyeID" class="form-control" asp-items="ViewBag.UyeValue"></select>
+            <label class="form-label">Öğrenci ID</label>
+            <input asp-for="OgrenciID" class="form-control" />
         </div>
 
         <div class="mb-3">
             <label class="form-label">Kitap Seç</label>
-            <select asp-for="KitapID" class="form-control" asp-items="ViewBag.KitapValue"></select>
+            <select asp-for="KitapID" class="form-control" asp-items="ViewBag.KitapList"></select>
         </div>
 
         <button type="submit" class="btn btn-primary">Kaydet</button>

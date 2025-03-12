@@ -11,10 +11,14 @@
         <h1>Ödünç Kitaplar</h1>
     </div>
 
-    <table class="table table-bordered">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Öğrenci adı ile ara..." onkeyup="searchTable('searchInput', 'hireTable', 0)">
+    </div>
+
+    <table class="table table-bordered" id="hireTable">
         <thead>
             <tr>
-                <th>Üye</th>
+                <th>Öğrenci</th>
                 <th>Kitap</th>
                 <th>Ödünç Alma Tarihi</th>
                 <th>İade Tarihi</th>
@@ -26,7 +30,7 @@
             @foreach (var odunc in Model)
             {
                 <tr>
-                    <td>@odunc.Uye.Ad @odunc.Uye.Soyad</td>
+                    <td>@odunc.OgrenciID</td>
                     <td>@odunc.Kitap.Baslik</td>
                     <td>@odunc.OduncAlimTarihi.ToShortDateString()</td>
                     <td>@(odunc.IadeTarihi?.ToShortDateString() ?? "Henüz İade Edilmedi")</td>
